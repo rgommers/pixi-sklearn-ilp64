@@ -26,13 +26,16 @@ requirements:
     - ${{ compiler('fortran') }}
   host:
     # note: variant is injected here!
-    - python
+    - python=3.14
+    - python-freethreading
     - cython
     - python-build
     - meson-python
     - pkg-config
     - pip
     - mkl
+    - mkl-devel
+    - mkl-include
     #- blas-devel
     - pybind11
     - pythran

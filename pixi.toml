@@ -1,0 +1,28 @@
+[workspace]
+preview = ["pixi-build"]
+authors = ["Ralf Gommers <ralf.gommers@gmail.com>"]
+channels = ["conda-forge"]
+name = "scikit-learn"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+build = { cmd = "spin build", cwd = "scikit-learn", env = { CC = "ccache $CC", CXX = "ccache $CXX" } }
+test = { cmd = "spin test --no-build", cwd = "scikit-learn" }
+
+[dependencies]
+cython = ">=3.2.4,<4"
+ninja = ">=1.13.2,<2"
+pkg-config = ">=0.29.2,<0.30"
+meson = ">=1.10.1,<2"
+spin = ">=0.17,<0.18"
+pip = ">=26.0.1,<27"
+meson-python = ">=0.19.0,<0.20"
+numpy = ">=2.4.2,<3"
+c-compiler = ">=1.11.0,<2"
+cxx-compiler = ">=1.11.0,<2"
+libgomp = ">=15.2.0,<16"
+joblib = ">=1.5.3,<2"
+threadpoolctl = ">=3.6.0,<4"
+pytest = ">=9.0.2,<10"
+pytest-xdist = ">=3.8.0,<4"

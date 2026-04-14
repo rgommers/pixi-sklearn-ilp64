@@ -36,6 +36,8 @@ test = { cmd = "spin test --no-build", cwd = "scikit-learn" }
 build-sm = { cmd = "pip install -e . --no-build-isolation -v", cwd = "statsmodels", env = { CC = "ccache $CC" } }
 test-sm = { cmd = "pytest statsmodels -n4", cwd = "statsmodels" }
 
+build-testpkg = { cmd = "pip install -e . --no-build-isolation -v -Cbuild-dir=$PIXI_PROJECT_ROOT/testpkg/build", cwd = "testpkg/ilp64_test_package" }
+test-testpkg = { cmd = "pytest ilp64_test_package/tests", cwd = "testpkg" }
 
 # Feature: ILP64 scipy (MKL)
 [feature.mkl-ilp64.dependencies]
@@ -47,6 +49,9 @@ test-ilp64 = { cmd = "spin test --no-build", cwd = "scikit-learn" }
 
 build-ilp64-sm = { cmd = "pip install -e . --no-build-isolation -v -Cbuild-dir=build-ilp64-sm", cwd = "statsmodels", env = { CC = "ccache $CC" } }
 test-ilp64-sm = { cmd = "pytest statsmodels -n4", cwd = "statsmodels" }
+
+build-ilp64-testpkg = { cmd = "pip install -e . --no-build-isolation -v -Cbuild-dir=$PIXI_PROJECT_ROOT/testpkg/build-ilp64", cwd = "testpkg/ilp64_test_package" }
+test-ilp64-testpkg = { cmd = "pytest ilp64_test_package/tests/", cwd = "testpkg" }
 
 [environments]
 default = ["openblas"]

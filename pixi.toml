@@ -6,13 +6,6 @@ name = "scikit-learn"
 platforms = ["linux-64"]
 version = "0.1.0"
 
-[tasks]
-build = { cmd = "spin install", cwd = "scikit-learn", env = { CC = "ccache $CC", CXX = "ccache $CXX" } }
-test = { cmd = "spin test --no-build", cwd = "scikit-learn" }
-
-build-sm = { cmd = "pip install -e . --no-build-isolation -v", cwd = "statsmodels", env = { CC = "ccache $CC" } }
-test-sm = { cmd = "pytest statsmodels -n4", cwd = "statsmodels" }
-
 [dependencies]
 cython = ">=3.2.4,<4"
 ninja = ">=1.13.2,<2"
@@ -30,5 +23,31 @@ threadpoolctl = ">=3.6.0,<4"
 pytest = ">=9.0.2,<10"
 pytest-xdist = ">=3.8.0,<4"
 python-freethreading = ">=3.14.3,<4"
-scipy = { path = "pixi-packages/scipy" }
 setuptools_scm = ">=9.2.2,<10"
+
+# Feature: default scipy (OpenBLAS, LP64)
+[feature.openblas.dependencies]
+scipy = { path = "pixi-packages/scipy" }
+
+[feature.openblas.tasks]
+build = { cmd = "spin install", cwd = "scikit-learn", env = { CC = "ccache $CC", CXX = "ccache $CXX" } }
+test = { cmd = "spin test --no-build", cwd = "scikit-learn" }
+
+build-sm = { cmd = "pip install -e . --no-build-isolation -v", cwd = "statsmodels", env = { CC = "ccache $CC" } }
+test-sm = { cmd = "pytest statsmodels -n4", cwd = "statsmodels" }
+
+
+# Feature: ILP64 scipy (MKL)
+[feature.mkl-ilp64.dependencies]
+scipy = { path = "pixi-packages/scipy-ilp64" }
+
+[feature.mkl-ilp64.tasks]
+build-ilp64 = { cmd = "spin install -- -Cbuild-dir=build-ilp64", cwd = "scikit-learn", env = { CC = "ccache $CC", CXX = "ccache $CXX" } }
+test-ilp64 = { cmd = "spin test --no-build", cwd = "scikit-learn" }
+
+build-ilp64-sm = { cmd = "pip install -e . --no-build-isolation -v -Cbuild-dir=build-ilp64-sm", cwd = "statsmodels", env = { CC = "ccache $CC" } }
+test-ilp64-sm = { cmd = "pytest statsmodels -n4", cwd = "statsmodels" }
+
+[environments]
+default = ["openblas"]
+mkl-ilp64 = { features = ["mkl-ilp64"], solve-group = "mkl-ilp64" }

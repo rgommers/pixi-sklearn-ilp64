@@ -5,10 +5,6 @@ package:
   name: scipy
   version: ${{ version }}
 
-#source:
-#  - url: https://github.com/scipy/scipy/releases/download/v${{ version }}/scipy-${{ version }}.tar.gz
-#    sha256: 485b87235796410c3519a699cfe1faab097e509e90ebb05dcd098db2ae87e7b3
-
 source:
   path: scipy
   use_gitignore: false
@@ -30,8 +26,9 @@ requirements:
     - meson-python
     - pkg-config
     - pip
-    - openblas
-    - blas-devel
+    - mkl
+    - mkl-devel
+    - mkl-include
     - pybind11
     - pythran
     - numpy
